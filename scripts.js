@@ -10,57 +10,55 @@ GOAL:
     * 
 */
 
-document.querySelector('#user-confirm').addEventListener('click', async()=>{
-    const input = document.querySelector('#user-zip');
-    const weather = await checkWeather(input.value);
-
-    const weatherGui = document.querySelector('#weather-result');
-    const bg = document.querySelector('#container');
-
-    const kelvin = weather.main.temp;
-    const celsius = kelvin - 273.15;
-    const fahrenheit = celsius *9/5 + 32;
-    const description = weather.weather[0].description;
-
-    const img = await checkGiphy(description)
-    bg.style.backgroundImage = `url('${img.data.images.original.url}')`;
-
-    const button = document.createElement('button');
-    button.textContent = `${kelvin.toFixed(0)} degrees Kelvin.`;
-    button.addEventListener('click', ()=>{
-        if (button.textContent.includes('Kelvin')){
-            button.textContent = `${celsius.toFixed(2)} degrees Celcius.`;
-        } else if (button.textContent.includes('Celcius')){
-            button.textContent = `${fahrenheit.toFixed(0)} degrees Fahrenheit.`;
-        } else {
-            button.textContent = `${kelvin.toFixed(0)} degrees Kelvin.`;
-        }
-    }); 
-
-    const weatherP = document.createElement('p');
-    weatherP.textContent = `The temperature in ${weather.name} is:`;
-
-    const descriptionP = document.createElement('p');
-    descriptionP.textContent = description;
-
-    weatherGui.innerHTML = ``;
-    weatherGui.appendChild(weatherP);
-    weatherGui.appendChild(button);
-    weatherGui.appendChild(descriptionP);
-});
-
-async function checkWeather(zip="32641") {
+(function(){
     const key = `c937e56c43bbfbd7edd24a3aa2b5a7a0`;
 
-    const response = await fetch(`http://api.openweathermap.org/data/2.5/weather?zip=${zip}&appid=${key}`, {mode: 'cors'});
-    const weather = await response.json();
-    return weather;        
-}
+    // converts coords into weather
+    const weather = async function openWeather7Day(coords){
+        const result = await fetch(`https://api.openweathermap.org/data/2.5/onecall?${coords}&exclude=minutely,hourly,alerts&appid=${key}`, {
+            mode: 'cors'
+        });
+        const resultData = await result.json();
 
-async function checkGiphy(input){
-    const key = `2rv4NFa17C0ieCfA4dCO0Hx21P81jn6C`;
+        return resultData;
+    }
 
-    const response = await fetch(`https://api.giphy.com/v1/gifs/translate?api_key=${key}&s=${input}`, {mode: 'cors'});
-    const gifData = await response.json();
-    return gifData;
-}
+    // converts a city, state or a zip code into coordinates
+    const coords = async function openWeatherGeocoding(zip, location){
+        let fetchMe = `http://api.openweathermap.org/geo/1.0/direct?q=${location}&limit=${1}&appid=${key}`;
+        if (location === 'none'){
+            fetchMe = `http://api.openweathermap.org/geo/1.0/zip?zip=${zip}&appid=${key}`;
+        }
+
+        const newCoords = await fetch(fetchMe, {
+            mode: 'cors'
+        });
+
+        // grab the coords
+        const coordsData = await newCoords.json();
+        const convertedCoords = `lat=${coordsData.lat}&lon=${coordsData.lon}`;
+
+        // get the weather
+        const result = await weather(convertedCoords);
+        console.log(result);
+        console.log(result.current.weather[0])
+    }
+
+    document.querySelector('#user-confirm').addEventListener('click', ()=>{
+        // grab's what the user put in the search field
+        const userInput = document.querySelector('#user-input').value;
+    
+        // try to convert it into coords depending on the type of input
+        let result = '';
+        if (userInput.match(/\d+/g)){
+            // provide what we think is a zipcode
+            console.log('zip '+userInput);
+            result = coords(userInput, 'none');
+        } else {
+            // provide what we think is a city
+            console.log('city '+userInput);
+            result = coords('none', userInput);
+        }
+    
+    });
+})();

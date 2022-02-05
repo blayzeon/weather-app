@@ -1,52 +1,48 @@
-html{
+html,body{
     height: 100%;
 }
 
-body{
+main{
     height: 100%;
-    width: 100%;
-    box-sizing: border-box !important;
-    margin: 0;
-    padding: 0;
     display: flex;
-    justify-content: center;
-    align-items: center;
-    background: black;
+    background: rgb(238,174,202);
+    background: radial-gradient(circle, rgba(238,174,202,1) 0%, rgba(148,187,233,1) 100%);
 }
 
-#container{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 5rem;
+hr{
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    border: 0;
+    height: 2px;
+    width: 50%;
     border-radius: 5rem;
+    background: gray;
 }
 
-#user-zip{
-    padding: 0.5rem;
-}
-
-#weather-result > button {
+ul{
     all: unset;
-    cursor: pointer;
+    list-style-type: none;
 }
 
-#weather-result > button:hover{
-    background: white;
-}
-
-.group{
-    background: rgba(255, 255, 255, 0.8);
-    padding: 2rem;
-    border-radius: 1rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    min-width: 20rem;
+.main{
+    font-size: x-large;
 }
 
 .flex{
     display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.main > li > img{
+    width: 7rem;
+}
+
+.row{
+    gap: 3rem;
+}
+
+.column{
+    flex-direction: column;
 }
