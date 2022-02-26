@@ -13,13 +13,13 @@ import createDom from './dom';
 const date = new Date();
 const today = date.getDay();
 const days = [
-  'Sun',
-  'Mon',
-  'Tue',
-  'Wed',
-  'Thu',
-  'Fri',
-  'Sat',
+  'Sunday',
+  'Monday',
+  'Tueday',
+  'Wednesday',
+  'Thursday',
+  'Friday',
+  'Saturday',
 ];
 
 // dom container
@@ -58,9 +58,9 @@ function checkData() {
 
       if (i === 0) {
         // use current for the first day
-        createDom.createCard(week, `https://openweathermap.org/img/wn/${weather.data.current.weather[0].icon}.png`, weather.data.current.weather[0].description, `Today:<br><span dataTemp>${(weather.data.current.temp - 273.15).toFixed(0)}</span>°<span dataletter>${tempLetter}</span>`);
+        createDom.createCard(week, `img/${weather.data.current.weather[0].main}.svg`, weather.data.current.weather[0].description, `Today:<br><span dataTemp>${(weather.data.current.temp - 273.15).toFixed(0)}</span>°<span dataletter>${tempLetter}</span>`, weather.data.current.weather[0].main);
       } else {
-        createDom.createCard(week, `https://openweathermap.org/img/wn/${weather.data.daily[i].weather[0].icon}.png`, weather.data.daily[i].weather[0].description, `${days[nextDay]}:<br><span datatemp>${(weather.data.daily[i].temp.min - 273.15).toFixed(0)}</span> to <span datatemp>${(weather.data.daily[i].temp.max - 273.15).toFixed(0)}</span>°<span dataletter>${tempLetter}</span>`);
+        createDom.createCard(week, `img/${weather.data.daily[i].weather[0].main}.svg`, weather.data.daily[i].weather[0].description, `${days[nextDay]}:<br><span datatemp>${(weather.data.daily[i].temp.min - 273.15).toFixed(0)}</span>° to <span datatemp>${(weather.data.daily[i].temp.max - 273.15).toFixed(0)}</span>°<span dataletter>${tempLetter}</span>`, weather.data.daily[i].weather[0].main);
         nextDay += 1;
       }
     }
@@ -98,11 +98,19 @@ function checkData() {
   }
 }
 
+// ask for geolocation
+weather.getCoords();
+
 // event listener for the button to request coords & check when provided
 coordsButton.addEventListener('click', () => {
-  // asks for the user's location in order to get coordinance
-  weather.getCoords();
+  if (weather.data.lat !== '0') {
+    // weather data has already been gathered
+    checkData();
+  } else {
+    // asks for the user's location in order to get coordinance
+    weather.getCoords();
 
-  // checks if the data has loaded every 1 second
-  checkData();
+    // checks if the data has loaded every 1 second
+    checkData();
+  }
 });

@@ -16,6 +16,17 @@ body, html, #container{
     justify-content: center;
 }
 
+.polka-dot {
+  width: 240px;
+  height: 240px;
+  background-color: #eee;
+  background-image: radial-gradient(#fff 10%, transparent 11%),
+    radial-gradient(#fff 10%, transparent 11%);
+  background-size: 60px 60px;
+  background-position: 0 0, 30px 30px;
+  background-repeat: repeat;
+}
+
 #default-container * {
     width: 80%;
 }
@@ -29,6 +40,15 @@ body, html, #container{
     font-family: arial;
     margin: 1rem 0 2rem 0;
     font-weight: normal;
+}
+
+#default-container input{
+    width: 50%;
+    margin-bottom: 1rem;
+    padding: 0.7rem;
+    font-size: large;
+    border-radius: 1rem;
+    border: 0.2rem solid slategray;
 }
 
 #container{
@@ -64,7 +84,7 @@ body, html, #container{
 .card{
     display: flex;
     background: gray;
-    padding: 1.8rem 0 0 0;
+    padding: 0.5rem 0 1rem 0;
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -74,19 +94,62 @@ body, html, #container{
     pointer-events: none;
 }
 
+.card img{
+    height: 8rem;
+}
+
 .card span{
     margin: 0;
     padding: 0;
 }
 
+.card p, .card h4{
+    background: rgba(10,30,60,0.5);
+    padding: 0.5rem 5rem;
+    border-radius: 1rem;
+}
+.card h4{
+    font-size: large;
+    margin: 0;
+}
 .card p{
-    padding-bottom: 2.5rem;
+    font-size: large;
+}
+
+.Clear {
+    background: rgb(203,232,255);
+    background: radial-gradient(circle, rgba(203,232,255,1) 0%, rgba(73,164,255,1) 100%);
+}
+
+.Clouds, .Dust, .Fog, .Haze, .Mist {
+    background: rgb(255,255,255);
+    background: radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(44,89,134,1) 100%);
+}
+
+.Rain, .Drizzle {
+    background: rgb(191,223,255);
+    background: radial-gradient(circle, rgba(191,223,255,1) 0%, rgba(48,63,78,1) 100%);
+}
+
+.Thunderstorm {
+    background: rgb(55,76,108);
+    background: radial-gradient(circle, rgba(55,76,108,1) 0%, rgba(6,20,34,1) 100%);
+}
+
+.Snow, .Squall {
+    background: rgb(255,255,255);
+    background: radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(174,215,255,1) 100%);
+}
+
+.Sand, .Smoke, .Tornado{
+    background: rgb(255,249,203);
+    background: radial-gradient(circle, rgba(255,249,203,1) 0%, rgba(57,49,45,1) 100%);
 }
 
 button{
     all: unset;
-    background: steelblue;
-    border: 0.2rem solid steelblue;
+    background: slategray;
+    border: 0.2rem solid slategray;
     color: white;
     border-radius: 2rem;
     padding: 0.7rem 1.5rem;
@@ -97,6 +160,5 @@ button{
 }
 
 button:hover{
-    background: white;
-    color: steelblue;
+    background: lightslategray;
 }

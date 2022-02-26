@@ -3,6 +3,7 @@ const createDom = {
     // create the elements
     const dContainer = document.createElement('div');
     dContainer.setAttribute('id', 'default-container');
+    dContainer.classList.add('polka-dot');
     const header = document.createElement('h1');
     header.innerText = 'Weather App';
     const subtext = document.createElement('h4');
@@ -22,9 +23,10 @@ const createDom = {
       node.removeChild(node.lastChild);
     }
   },
-  createCard(container, imgSrc, captionText, infoText) {
+  createCard(container, imgSrc, captionText, infoText, cClass) {
     // create the elements
     const card = document.createElement('div');
+    card.classList.add(cClass);
     card.classList.add('card');
     const img = document.createElement('img');
     img.setAttribute('src', imgSrc);

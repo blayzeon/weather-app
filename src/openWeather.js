@@ -19,8 +19,7 @@ const weather = {
     It should be ran after getCoords in order to provide local weather data
   */
   async createWeatherPromise() {
-    const key = 'c937e56c43bbfbd7edd24a3aa2b5a7a0';
-    const oneCallApi = `https://api.openweathermap.org/data/2.5/onecall?lat=${weather.data.lat}&lon=${weather.data.lon}&exclude=minutely,alerts&appid=${key}`;
+    const oneCallApi = `https://api.openweathermap.org/data/2.5/onecall?lat=${weather.data.lat}&lon=${weather.data.lon}&exclude=minutely,alerts&appid=c937e56c43bbfbd7edd24a3aa2b5a7a0`;
 
     try {
       const response = await fetch(oneCallApi, {
