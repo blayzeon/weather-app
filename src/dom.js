@@ -9,7 +9,7 @@ const createDom = {
     const subtext = document.createElement('h4');
     subtext.innerText = 'Created using Geolocation and OpenWeather API';
     const button = document.createElement('button');
-    button.innerText = 'Get Location';
+    button.innerText = 'Get Weather';
     button.setAttribute('id', 'geo-button');
 
     // add to container & push container to DOM
@@ -41,6 +41,38 @@ const createDom = {
     card.appendChild(caption);
     card.appendChild(info);
     container.appendChild(card);
+  },
+  createPopup(container, msg) {
+    // create the elements
+    const popup = document.createElement('div');
+    popup.classList.add('popup');
+    const topbar = document.createElement('div');
+    topbar.innerText = 'Alert';
+    const info = document.createElement('div');
+    info.innerHTML = msg;
+
+    function moveItem() {
+      let mousedown = true;
+      onmousemove = function (e) {
+        if (mousedown === true) {
+          popup.style.left = `${e.clientX - (popup.clientWidth / 2)}px`;
+          popup.style.top = `${e.clientY}px`;
+        }
+      };
+
+      onmouseup = function () {
+        mousedown = false;
+      };
+    }
+
+    topbar.addEventListener('mousedown', (e) => {
+      moveItem(e);
+    });
+
+    // add to container
+    popup.appendChild(topbar);
+    popup.appendChild(info);
+    container.appendChild(popup);
   },
 
 };

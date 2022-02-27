@@ -33,7 +33,7 @@ const coordsButton = document.querySelector('#geo-button');
 function checkData() {
   let tempLetter = 'C';
   const timer = setTimeout(checkData, 3000);
-  if (weather.data.lat !== '0') {
+  if ('current' in weather.data) {
     // Once it has been updated, we can update the DOM
     clearTimeout(timer);
     createDom.clearNodesFrom(container);
@@ -100,6 +100,7 @@ function checkData() {
 
 // ask for geolocation
 weather.getCoords();
+checkData();
 
 // event listener for the button to request coords & check when provided
 coordsButton.addEventListener('click', () => {
@@ -109,7 +110,7 @@ coordsButton.addEventListener('click', () => {
   } else {
     // asks for the user's location in order to get coordinance
     weather.getCoords();
-
+    createDom.createPopup(document.querySelector('#default-container'), 'Please allow location access.  If allowed, weather will load shortly. <br><br> <img src="https://media1.giphy.com/media/sSgvbe1m3n93G/giphy.gif?cid=ecf05e47s3ft5s8sr5979ju6j2fzz9n8nbgo9k8yabc14gym&rid=giphy.gif&ct=g" alt="loading image">');
     // checks if the data has loaded every 1 second
     checkData();
   }
